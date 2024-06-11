@@ -4,7 +4,13 @@
 			<h1>BookPilot</h1>
 		</header>
 		<main>
-			<BookForm @add-book="addBook" :books="books" @submit="run" />
+			<BookForm @add-book="addBook" :books="books" />
+			<ul>
+				<li v-for="(book, index) in books" :key="index">
+					{{ book.title }}, by {{ book.author }}
+				</li>
+			</ul>
+			<button @click="getRecommendations">Get Recommendations</button>
 		</main>
 	</div>
 </template>
@@ -23,19 +29,21 @@ const addBook = (book: Book) => {
 	books.value.push(book);
 };
 
-const formatBookDescriptions = () => books.value.map((book) => `${book.title}, by ${book.author}`);
+const formatBookDescriptions = () =>
+	books.value.map((book) => `${book.title}, by ${book.author}`);
 
-async function run() {
+const getRecommendations = async () => {
 	const bookDescriptions = formatBookDescriptions();
 
-	const prompt = `Return me an array of three objects with title and author keys. In that list, you will suggest books similar to: ${bookDescriptions.join("; ")}. Put the title and the author in the object. Don't repeat the books. Return only the array in JSON format.`;
+	const prompt = `Return me an array of three objects with title and author keys. In that list, you will suggest books similar to: ${bookDescriptions.join(
+		"; "
+	)}. Put the title and the author in the object. Don't repeat the books. Return only the array in JSON format.`;
 
 	const result = await model.generateContent(prompt);
 	const response = result.response;
 	const text = response.text();
 	console.log(text);
-}
-
+};
 </script>
 
 <style>
@@ -47,5 +55,17 @@ header {
 
 main {
 	padding: 20px;
+
+	ul {
+		list-style-type: none;
+		padding: 0;
+
+		li {
+			margin: 5px 0;
+			padding: 5px;
+			border: 1px solid #ddd;
+			border-radius: 5px;
+		}
+	}
 }
 </style>
