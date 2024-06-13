@@ -26,34 +26,23 @@ const handleAddBook = () => {
 };
 </script>
 
-<style scoped>
+<style scoped lang="postcss">
 form {
-	display: flex;
-	width: min(90%, 600px);
-	flex-direction: column;
-	align-items: center;
-	padding: 20px 10px;
-	margin-bottom: 20px;
-	background: #f9f9f9;
-	border-radius: 12px;
-	box-shadow: 0 0 4px 0px #0000004d;
-}
+	@apply flex w-11/12 flex-col items-center py-5 px-3 mb-5 bg-[#f9f9f9] rounded-xl shadow-[0_0_0_4px_0px_#0000004d];
 
-label {
-	margin: 10px 0 5px;
-	display: flex;
-	flex-direction: column;
-	width: 70%;
-
-	span {
-		width: min-content;
-		font-size: 1.1rem;
-		cursor: text;
+	h2 {
+		@apply font-bold text-lg;
 	}
+	label {
+		@apply my-3 flex flex-col w-3/4;
 
-	input {
-		margin-bottom: 10px;
-		padding: 5px;
+		span {
+			@apply w-min cursor-text;
+		}
+
+		input {
+			@apply mb-3 p-1;
+		}
 	}
 }
 </style>

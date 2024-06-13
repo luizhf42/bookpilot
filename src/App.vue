@@ -5,12 +5,14 @@
 		</header>
 		<main>
 			<BookForm @add-book="addBook" :books="books" />
-			<ul>
-				<li v-for="(book, index) in books" :key="index">
-					{{ book.title }}, by {{ book.author }}
-				</li>
-			</ul>
-			<button @click="getRecommendations">Get Recommendations</button>
+			<div>
+				<ul>
+					<li v-for="(book, index) in books" :key="index">
+						{{ book.title }}, by {{ book.author }}
+					</li>
+				</ul>
+				<button @click="getRecommendations">Get Recommendations</button>
+			</div>
 		</main>
 	</div>
 </template>
@@ -46,26 +48,24 @@ const getRecommendations = async () => {
 };
 </script>
 
-<style>
+<style lang="postcss">
 header {
-	background-color: #42b983;
-	padding: 20px;
-	color: white;
+	@apply bg-[#a86114] p-5 text-white;
+
+	h1 {
+		@apply text-3xl font-extrabold;
+	}
 }
 
 main {
-	padding: 20px;
+	@apply p-5 flex flex-col justify-evenly items-center;
 
-	ul {
-		list-style-type: none;
-		padding: 0;
+	li {
+		@apply my-1 p-1 border border-black rounded-sm;
+	}
 
-		li {
-			margin: 5px 0;
-			padding: 5px;
-			border: 1px solid #ddd;
-			border-radius: 5px;
-		}
+	button {
+		@apply default-button;
 	}
 }
 </style>

@@ -1,26 +1,7 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Lato, Arial, Helvetica, sans-serif;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 body {
-  background-color: #c4ffbc;
-  min-height: 100vh;
-  
-  button {
-    padding: 10px 20px;
-    background-color: #42b983;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: all 0.2s ease-in-out;
-
-    &:hover {
-      background-color: #369f6e;
-    }
-  }
+  @apply bg-[#ffdbb5] min-h-screen;
 }
