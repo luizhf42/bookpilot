@@ -1,27 +1,18 @@
 <template>
-	<div id="wrapper">
-		<header>
-			<h1>BookPilot</h1>
-		</header>
-		<main>
-			<BookForm @add-book="addBook" :books="books" />
-			<div>
-				<ul>
-					<li v-for="(book, index) in books" :key="index">
-						{{ book.title }}, by {{ book.author }}
-					</li>
-				</ul>
-				<button @click="getRecommendations">Get Recommendations</button>
-			</div>
-		</main>
-	</div>
+	<header>
+		<h1>Bookpilot</h1>
+	</header>
+	<main>
+		<Message>Hello, I am Bookpilot! I am here to help you choose your next reading. Let me know what kind of books you are interested in, and I'll provide you with some recommendations.</Message>
+		<Message>Tell me the books you want me to find similar works, how many of them you want, if I can repeat the authors, etc...</Message>
+	</main>
 </template>
 
 <script setup lang="ts">
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { ref } from "vue";
-import BookForm from "./components/BookForm.vue";
 import { Book } from "./models/Book";
+import Message from "./components/Message.vue";
 
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
@@ -50,22 +41,14 @@ const getRecommendations = async () => {
 
 <style lang="postcss">
 header {
-	@apply bg-[#a86114] p-5 text-white;
+	@apply w-full bg-gray-800 p-3 border-b border-white;
 
 	h1 {
-		@apply text-3xl font-extrabold;
+		@apply text-2xl font-extrabold;
 	}
 }
 
 main {
-	@apply p-5 flex flex-col justify-evenly items-center;
-
-	li {
-		@apply my-1 p-1 border border-black rounded-sm;
-	}
-
-	button {
-		@apply default-button;
-	}
+	@apply w-full max-w-4xl mx-auto p-4;
 }
 </style>
