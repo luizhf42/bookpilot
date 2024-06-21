@@ -3,8 +3,9 @@
 		<h1>Bookpilot</h1>
 	</header>
 	<main>
-		<Message>Hello, I am Bookpilot! I am here to help you choose your next reading. Let me know what kind of books you are interested in, and I'll provide you with some recommendations.</Message>
-		<Message>Tell me the books you want me to find similar works, how many of them you want, if I can repeat the authors, etc...</Message>
+		<Message from="Bookpilot">Hello, I am Bookpilot! I am here to help you choose your next reading. Let me know what kind of books you are interested in, and I'll provide you with some recommendations.</Message>
+		<Message from="Bookpilot">Tell me the books you want me to find similar works, how many of them you want, if I can repeat the authors, etc...</Message>
+		<BooksForm />
 	</main>
 </template>
 
@@ -13,6 +14,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { ref } from "vue";
 import { Book } from "./models/Book";
 import Message from "./components/Message.vue";
+import BooksForm from "./components/BooksForm.vue";
 
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });

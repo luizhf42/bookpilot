@@ -2,7 +2,7 @@
 	<div class="wrapper">
 		<img src="../assets/user.svg" alt="profile pic" />
 		<div>
-			<span>Bookpilot</span>
+			<span>{{ from }}</span>
 			<p>
 				<slot />
 			</p>
@@ -10,7 +10,11 @@
 	</div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const { from } = defineProps({
+	from: String,
+});
+</script>
 
 <style scoped lang="postcss">
 .wrapper {
