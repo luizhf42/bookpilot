@@ -3,9 +3,20 @@
 		<h1>Bookpilot</h1>
 	</header>
 	<main>
-		<Message from="Bookpilot">Hello, I am Bookpilot! I am here to help you choose your next reading. Let me know what kind of books you are interested in, and I'll provide you with some recommendations.</Message>
-		<Message from="Bookpilot">Tell me the books you want me to find similar works, how many of them you want, if I can repeat the authors, etc...</Message>
-		<BooksForm />
+		<Message from="Bookpilot"
+			><p>
+				Hello, I am Bookpilot! I am here to help you choose your next reading.
+				Let me know what kind of books you are interested in, and I'll provide
+				you with some recommendations.
+			</p>
+			<p>
+				Tell me the books you want me to find similar works, how many of them
+				you want, if I can repeat the authors, etc...
+			</p>
+		</Message>
+		<Message from="You">
+			<BooksForm />
+		</Message>
 	</main>
 </template>
 

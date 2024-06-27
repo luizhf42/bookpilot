@@ -3,9 +3,9 @@
 		<img src="../assets/user.svg" alt="profile pic" />
 		<div>
 			<span>{{ from }}</span>
-			<p>
+			<div>
 				<slot />
-			</p>
+			</div>
 		</div>
 	</div>
 </template>
