@@ -1,12 +1,21 @@
 <template>
 	<form>
-		<label
-			>Title <input type="text" @keypress="changeFocusToAuthor" v-model="title"
-		/></label>
-		<label
-			>Author
-			<input type="text" ref="authorInput" @keypress="addBook" v-model="author"
-		/></label>
+		<p>Suggest me books similar to:</p>
+		<div class="book-input">
+			<label
+				>Title
+				<input type="text" @keypress="changeFocusToAuthor" v-model="title"
+			/></label>
+			<span>by</span>
+			<label
+				>Author
+				<input
+					type="text"
+					ref="authorInput"
+					@keypress="addBook"
+					v-model="author"
+			/></label>
+		</div>
 	</form>
 	<InputtedBooksList :books="books" />
 </template>
@@ -14,6 +23,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { Book } from "../models/Book";
+import InputtedBooksList from "./InputtedBooksList.vue";
 
 const title = ref("");
 const author = ref("");
@@ -29,7 +39,13 @@ const addBook = (event: KeyboardEvent) => {
 </script>
 
 <style scoped lang="postcss">
-input {
-	@apply text-black;
+.book-input {
+	@apply flex gap-1 items-end;
+	label {
+		@apply flex flex-col;
+	}
+	input {
+		@apply text-black;
+	}
 }
 </style>
