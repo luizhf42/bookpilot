@@ -17,7 +17,7 @@
 			/></label>
 		</div>
 		<InputtedBooksList :books="books" />
-		<button>Submit</button>
+		<button :disabled="books?.length === 0">Submit</button>
 	</form>
 </template>
 
@@ -51,7 +51,7 @@ const handleEnter = (event: KeyboardEvent) => {
 <style scoped lang="postcss">
 form {
 	@apply bg-gray-600 px-4 py-3 rounded-lg w-full;
-	
+
 	p {
 		@apply font-bold;
 	}
@@ -69,7 +69,7 @@ form {
 	}
 
 	button {
-		@apply bg-gray-900 rounded-lg text-lg text-white px-4 py-2 mt-2 transition ease-linear hover:bg-gray-800;
+		@apply bg-gray-900 rounded-lg text-lg text-white px-4 py-2 mt-2 transition ease-linear hover:enabled:bg-gray-800 disabled:bg-gray-500 disabled:cursor-not-allowed;
 	}
 }
 </style>

@@ -18,7 +18,7 @@ const { books } = defineProps({
 ul {
 	@apply flex gap-2;
 	li {
-		@apply bg-sky-800 p-1 rounded-full w-fit;
+		@apply bg-gray-900 p-2 rounded-full w-fit;
 	}
 }
 </style>
