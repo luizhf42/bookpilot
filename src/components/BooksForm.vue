@@ -1,5 +1,5 @@
 <template>
-	<form>
+	<form @submit.prevent="$emit('submitBooks')">
 		<p>Suggest me books similar to:</p>
 		<div class="book-input">
 			<label
@@ -12,12 +12,13 @@
 				<input
 					type="text"
 					ref="authorInput"
-					@keypress="addBook"
+					@keypress.enter.prevent="handleEnter"
 					v-model="author"
 			/></label>
 		</div>
+		<InputtedBooksList :books="books" />
+		<button>Submit</button>
 	</form>
-	<InputtedBooksList :books="books" />
 </template>
 
 <script setup lang="ts">
@@ -25,27 +26,50 @@ import { ref } from "vue";
 import { Book } from "../models/Book";
 import InputtedBooksList from "./InputtedBooksList.vue";
 
-const title = ref("");
+const { books } = defineProps({
+	books: Array as () => Book[],
+});
+const emit = defineEmits(["addBook", "submitBooks"]);
+
 const author = ref("");
-const books = ref<Book[]>([]);
 const authorInput = ref<HTMLInputElement | null>(null);
+const title = ref("");
+
 const changeFocusToAuthor = (event: KeyboardEvent) => {
 	if (event.key === "Enter") authorInput.value?.focus();
 };
-const addBook = (event: KeyboardEvent) => {
-	if (event.key === "Enter")
-		books.value.push({ title: title.value, author: author.value });
+
+const handleEnter = (event: KeyboardEvent) => {
+	if (event.key === "Enter") {
+		emit("addBook", { title: title.value, author: author.value });
+		author.value = "";
+		title.value = "";
+	}
 };
 </script>
 
 <style scoped lang="postcss">
-.book-input {
-	@apply flex gap-1 items-end;
-	label {
-		@apply flex flex-col;
+form {
+	@apply bg-gray-600 px-4 py-3 rounded-lg w-full;
+	
+	p {
+		@apply font-bold;
 	}
-	input {
-		@apply text-black;
+
+	.book-input {
+		@apply flex gap-2 items-end my-2;
+
+		label {
+			@apply flex flex-col;
+		}
+
+		input {
+			@apply text-black h-7 bg-gray-200 rounded-lg px-2 focus:outline-none focus:ring-2 focus:ring-gray-900;
+		}
+	}
+
+	button {
+		@apply bg-gray-900 rounded-lg text-lg text-white px-4 py-2 mt-2 transition ease-linear hover:bg-gray-800;
 	}
 }
 </style>

@@ -15,7 +15,7 @@
 			</p>
 		</Message>
 		<Message from="You">
-			<BooksForm />
+			<BooksForm @add-book="addBook" @submit-books="getRecommendations" :books="books" />
 		</Message>
 	</main>
 </template>
@@ -35,13 +35,12 @@ const addBook = (book: Book) => {
 	books.value.push(book);
 };
 
-const formatBookDescriptions = () =>
-	books.value.map((book) => `${book.title}, by ${book.author}`);
-
 const getRecommendations = async () => {
-	const bookDescriptions = formatBookDescriptions();
+	const formattedBookDescriptions = books.value.map(
+		(book) => `${book.title}, by ${book.author}`
+	);
 
-	const prompt = `Return me an array of three objects with title and author keys. In that list, you will suggest books similar to: ${bookDescriptions.join(
+	const prompt = `Return me an array of three objects with title and author keys. In that list, you will suggest books similar to: ${formattedBookDescriptions.join(
 		"; "
 	)}. Put the title and the author in the object. Don't repeat the books. Return only the array in JSON format.`;
 

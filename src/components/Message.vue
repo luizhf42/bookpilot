@@ -17,8 +17,12 @@ const { from } = defineProps({
 </script>
 
 <style scoped lang="postcss">
+div {
+	@apply w-full;
+}
+
 .wrapper {
-	@apply w-full py-4 flex border-b border-white items-start gap-3;
+	@apply py-4 flex border-b border-white items-start gap-3;
 
 	img {
 		@apply w-12;
