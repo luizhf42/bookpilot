@@ -4,7 +4,10 @@
 		<div class="book-input">
 			<label
 				>Title
-				<input type="text" @keypress="changeFocusToAuthor" v-model="title"
+				<input
+					type="text"
+					@keypress.enter.prevent="changeFocusToAuthor"
+					v-model="title"
 			/></label>
 			<span>by</span>
 			<label
@@ -23,25 +26,21 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { Book } from "../models/Book";
 import InputtedBooksList from "./InputtedBooksList.vue";
+import { useBooksStore } from "../store/books";
 
-const { books } = defineProps({
-	books: Array as () => Book[],
-});
-const emit = defineEmits(["addBook", "submitBooks"]);
+const { books, addBook } = useBooksStore();
+const emit = defineEmits(["submitBooks"]);
 
 const author = ref("");
 const authorInput = ref<HTMLInputElement | null>(null);
 const title = ref("");
 
-const changeFocusToAuthor = (event: KeyboardEvent) => {
-	if (event.key === "Enter") authorInput.value?.focus();
-};
+const changeFocusToAuthor = () => authorInput.value?.focus();
 
-const handleEnter = (event: KeyboardEvent) => {
-	if (event.key === "Enter") {
-		emit("addBook", { title: title.value, author: author.value });
+const handleEnter = () => {
+	if (author.value && title.value) {
+		addBook({ title: title.value, author: author.value });
 		author.value = "";
 		title.value = "";
 	}

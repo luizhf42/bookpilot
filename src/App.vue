@@ -15,28 +15,27 @@
 			</p>
 		</Message>
 		<Message from="You">
-			<BooksForm @add-book="addBook" @submit-books="getRecommendations" :books="books" />
+			<BooksForm
+				@submit-books="getRecommendations"
+				:books="books"
+			/>
 		</Message>
 	</main>
 </template>
 
 <script setup lang="ts">
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { ref } from "vue";
-import { Book } from "./models/Book";
 import Message from "./components/Message.vue";
 import BooksForm from "./components/BooksForm.vue";
+import { useBooksStore } from "./store/books";
 
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-const books = ref<Book[]>([]);
 
-const addBook = (book: Book) => {
-	books.value.push(book);
-};
+const { books } = useBooksStore();
 
 const getRecommendations = async () => {
-	const formattedBookDescriptions = books.value.map(
+	const formattedBookDescriptions = books.map(
 		(book) => `${book.title}, by ${book.author}`
 	);
 
