@@ -1,7 +1,8 @@
 <template>
 	<ul>
 		<li v-for="(book, index) in books" :key="index">
-			{{ book.title }} by {{ book.author }} <span @click="deleteBook(index)">❌</span>
+			<span>{{ book.title }} by {{ book.author }} </span> 
+			<div @click="deleteBook(index)">X</div>
 		</li>
 	</ul>
 </template>
@@ -15,12 +16,20 @@ const deleteBook = (index: number) => books.splice(index, 1);
 
 <style scoped lang="postcss">
 ul {
-	@apply flex gap-2;
+	@apply flex gap-2 w-4/5 flex-wrap;
 	li {
-		@apply bg-gray-900 pl-2 rounded-full h-6;
+		@apply bg-gray-900 rounded-full h-8 flex items-center;
+
+		span, div {
+			@apply inline-flex items-center h-full px-2;
+		}
 
 		span {
-			@apply bg-red-600 h-6 pr-2;
+			@apply border-r border-white;
+		}
+
+		div {
+			@apply font-extrabold rounded-e-full cursor-pointer transition-all ease-linear hover:bg-red-600 hover:text-white;
 		}
 	}
 }
