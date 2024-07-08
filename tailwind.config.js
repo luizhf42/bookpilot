@@ -8,6 +8,9 @@ module.exports = {
 			fontFamily: {
 				sans: ["Lato", "Arial", "sans-serif"],
 			},
+			screens: {
+				xs: "475px",
+			},
 
 		},
 	},

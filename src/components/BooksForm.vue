@@ -56,7 +56,7 @@ form {
 	}
 
 	.book-input {
-		@apply flex gap-2 items-end my-2;
+		@apply flex flex-col sm:flex-row gap-2 sm:items-end my-2;
 
 		label {
 			@apply flex flex-col;
@@ -64,6 +64,10 @@ form {
 
 		input {
 			@apply text-black h-7 bg-gray-200 rounded-lg px-2 focus:outline-none focus:ring-2 focus:ring-gray-900;
+		}
+
+		span {
+			@apply hidden sm:inline-block;
 		}
 	}
 
