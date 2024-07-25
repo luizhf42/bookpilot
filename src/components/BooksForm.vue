@@ -18,28 +18,37 @@
 					@keypress.enter.prevent="handleEnter"
 					v-model="author"
 			/></label>
+			<button
+				class="add-button"
+				@click.prevent="handleEnter"
+				:disabled="!areInputsValid()"
+			>
+				Add book
+			</button>
 		</div>
-		<InputtedBooksList :books="books" />
-		<button :disabled="books?.length === 0">Submit</button>
+		<InputtedBooksList />
+		<button class="submit-button" :disabled="books?.length === 0">
+			Submit
+		</button>
 	</form>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
 import InputtedBooksList from "./InputtedBooksList.vue";
+import { ref } from "vue";
 import { useBooksStore } from "../store/books";
 
-const { books, addBook } = useBooksStore();
 const emit = defineEmits(["submitBooks"]);
+const { books, addBook } = useBooksStore();
 
 const author = ref("");
 const authorInput = ref<HTMLInputElement | null>(null);
 const title = ref("");
 
 const changeFocusToAuthor = () => authorInput.value?.focus();
-
+const areInputsValid = () => author.value.trim() !== "" && title.value.trim() !== "";
 const handleEnter = () => {
-	if (author.value && title.value) {
+	if (areInputsValid()) {
 		addBook({ title: title.value, author: author.value });
 		author.value = "";
 		title.value = "";
@@ -72,7 +81,15 @@ form {
 	}
 
 	button {
-		@apply bg-gray-900 rounded-lg text-lg text-white px-4 py-2 mt-2 transition ease-linear hover:enabled:bg-gray-800 disabled:bg-gray-500 disabled:cursor-not-allowed;
+		@apply bg-gray-900 rounded-lg text-white px-4 transition ease-linear hover:enabled:bg-gray-800 disabled:bg-gray-500 disabled:cursor-not-allowed;
+	}
+
+	.add-button {
+		@apply h-7;
+	}
+
+	.submit-button {
+		@apply text-lg py-2 mt-2;
 	}
 }
 </style>

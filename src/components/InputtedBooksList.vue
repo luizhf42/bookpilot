@@ -2,7 +2,7 @@
 	<ul>
 		<li v-for="(book, index) in books" :key="index">
 			<span>{{ book.title }} by {{ book.author }}</span>
-			<div @click="deleteBook(index)">X</div>
+			<div class="delete-button" @click="deleteBook(index)">X</div>
 		</li>
 	</ul>
 </template>
@@ -28,7 +28,7 @@ ul {
 			@apply border-r border-white;
 		}
 
-		div {
+		.delete-button {
 			@apply font-extrabold rounded-e-full cursor-pointer transition-all ease-linear hover:bg-red-600 hover:text-white;
 		}
 	}

@@ -15,10 +15,7 @@
 			</p>
 		</Message>
 		<Message from="You">
-			<BooksForm
-				@submit-books="getRecommendations"
-				:books="books"
-			/>
+			<BooksForm @submit-books="getRecommendations" />
 		</Message>
 	</main>
 </template>
