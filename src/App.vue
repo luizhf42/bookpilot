@@ -17,19 +17,30 @@
 		<Message from="You">
 			<BooksForm @submit-books="getRecommendations" />
 		</Message>
+		<Message from="Bookpilot" v-if="recommendedBooks.length > 0">
+			<p>Here are some books you might like:</p>
+			<ul>
+				<li v-for="book in recommendedBooks" :key="book.title">
+					{{ book.title }}, by {{ book.author }}
+				</li>
+			</ul>
+		</Message>
 	</main>
 </template>
 
 <script setup lang="ts">
+import { ref } from "vue";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import Message from "./components/Message.vue";
 import BooksForm from "./components/BooksForm.vue";
 import { useBooksStore } from "./store/books";
+import { Book } from "./models/Book";
 
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 const { books } = useBooksStore();
+const recommendedBooks = ref<Book[]>([]);
 
 const getRecommendations = async () => {
 	const formattedBookDescriptions = books.map(
@@ -40,10 +51,11 @@ const getRecommendations = async () => {
 		"; "
 	)}. Put the title and the author in the object. Don't repeat the books. Return only the array in JSON format.`;
 
-	const result = await model.generateContent(prompt);
-	const response = result.response;
-	const text = response.text();
-	console.log(text);
+	const { response } = await model.generateContent(prompt);
+	const returnedBooks = JSON.parse(response.text());
+	returnedBooks.forEach((book: Book) => {
+		recommendedBooks.value.push(book);
+	});
 };
 </script>
 

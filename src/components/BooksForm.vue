@@ -15,12 +15,12 @@
 				<input
 					type="text"
 					ref="authorInput"
-					@keypress.enter.prevent="handleEnter"
+					@keypress.enter.prevent="handleAddBook"
 					v-model="author"
 			/></label>
 			<button
 				class="add-button"
-				@click.prevent="handleEnter"
+				@click.prevent="handleAddBook"
 				:disabled="!areInputsValid()"
 			>
 				Add book
@@ -28,14 +28,14 @@
 		</div>
 		<InputtedBooksList />
 		<button class="submit-button" :disabled="books?.length === 0">
-			Submit
+			Get recommendations
 		</button>
 	</form>
 </template>
 
 <script setup lang="ts">
 import InputtedBooksList from "./InputtedBooksList.vue";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { useBooksStore } from "../store/books";
 
 const emit = defineEmits(["submitBooks"]);
@@ -45,11 +45,16 @@ const author = ref("");
 const authorInput = ref<HTMLInputElement | null>(null);
 const title = ref("");
 
+const formattedAuthor = computed(() => author.value.trim());
+const formattedTitle = computed(() => title.value.trim());
+
 const changeFocusToAuthor = () => authorInput.value?.focus();
-const areInputsValid = () => author.value.trim() !== "" && title.value.trim() !== "";
-const handleEnter = () => {
+
+const areInputsValid = () => formattedAuthor.value !== "" && formattedTitle.value !== "";
+
+const handleAddBook = () => {
 	if (areInputsValid()) {
-		addBook({ title: title.value, author: author.value });
+		addBook({ title: formattedTitle.value, author: formattedAuthor.value });
 		author.value = "";
 		title.value = "";
 	}
