@@ -6,6 +6,7 @@
 				>Title
 				<input
 					type="text"
+					ref="titleInput"
 					@keypress.enter.prevent="changeFocusToAuthor"
 					v-model="title"
 			/></label>
@@ -42,8 +43,9 @@ const emit = defineEmits(["submitBooks"]);
 const { books, addBook } = useBooksStore();
 
 const author = ref("");
-const authorInput = ref<HTMLInputElement | null>(null);
 const title = ref("");
+const authorInput = ref<HTMLInputElement | null>(null);
+const titleInput = ref<HTMLInputElement | null>(null);
 
 const formattedAuthor = computed(() => author.value.trim());
 const formattedTitle = computed(() => title.value.trim());
@@ -57,6 +59,7 @@ const handleAddBook = () => {
 		addBook({ title: formattedTitle.value, author: formattedAuthor.value });
 		author.value = "";
 		title.value = "";
+		titleInput.value?.focus();
 	}
 };
 </script>

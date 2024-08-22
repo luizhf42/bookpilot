@@ -2,7 +2,7 @@
 	<ul>
 		<li v-for="(book, index) in books" :key="index">
 			<span>{{ book.title }} by {{ book.author }}</span>
-			<div class="delete-button" @click="deleteBook(index)">X</div>
+			<div class="delete-button" role="button" @click="deleteBook(index)">X</div>
 		</li>
 	</ul>
 </template>
