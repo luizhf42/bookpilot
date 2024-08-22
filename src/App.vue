@@ -18,29 +18,23 @@
 			<BooksForm @submit-books="getRecommendations" />
 		</Message>
 		<Message from="Bookpilot" v-if="recommendedBooks.length > 0">
-			<p>Here are some books you might like:</p>
-			<ul>
-				<li v-for="book in recommendedBooks" :key="book.title">
-					{{ book.title }}, by {{ book.author }}
-				</li>
-			</ul>
+			<Recommendations />
 		</Message>
 	</main>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import Message from "./components/Message.vue";
 import BooksForm from "./components/BooksForm.vue";
+import Recommendations from "./components/Recommendations.vue";
 import { useBooksStore } from "./store/books";
 import { Book } from "./models/Book";
 
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-const { books } = useBooksStore();
-const recommendedBooks = ref<Book[]>([]);
+const { books, recommendedBooks, addRecommendedBook } = useBooksStore();
 
 const getRecommendations = async () => {
 	const formattedBookDescriptions = books.map(
@@ -54,7 +48,7 @@ const getRecommendations = async () => {
 	const { response } = await model.generateContent(prompt);
 	const returnedBooks = JSON.parse(response.text());
 	returnedBooks.forEach((book: Book) => {
-		recommendedBooks.value.push(book);
+		addRecommendedBook(book);
 	});
 };
 </script>

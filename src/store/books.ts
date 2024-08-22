@@ -7,5 +7,8 @@ export const useBooksStore = defineStore("books", () => {
 	const addBook = (book: Book) => books.value.push(book);
 	const deleteBook = (index: number) => books.value.splice(index, 1);
 
-	return { books, addBook, deleteBook };
+	const recommendedBooks = ref<Book[]>([]);
+	const addRecommendedBook = (book: Book) => recommendedBooks.value.push(book);
+
+	return { books, addBook, deleteBook, recommendedBooks, addRecommendedBook };
 });
