@@ -3,7 +3,7 @@
 		<h1>Bookpilot</h1>
 	</header>
 	<main>
-		<Message from="Bookpilot"
+		<Message from="Bookpilot" :class="[!showIntroduction && 'animate-disappear']"
 			><p>
 				Hello, I am Bookpilot! I am here to help you choose your next reading.
 				Let me know what kind of books you are interested in, and I'll provide
@@ -24,6 +24,7 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from "vue";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import Message from "./components/Message.vue";
 import BooksForm from "./components/BooksForm.vue";
@@ -34,9 +35,12 @@ import { Book } from "./models/Book";
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
+const showIntroduction = ref(true);
+
 const { books, recommendedBooks, addRecommendedBook } = useBooksStore();
 
 const getRecommendations = async () => {
+	showIntroduction.value = false;
 	const formattedBookDescriptions = books.map(
 		(book) => `${book.title}, by ${book.author}`
 	);

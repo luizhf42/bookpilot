@@ -11,26 +11,15 @@ module.exports = {
 			screens: {
 				xs: "475px",
 			},
-
+			keyframes: {
+				disappear: {
+					"0%": { opacity: "1" },
+					"100%": { opacity: "0", display: "none" },
+				},
+			},
+			animation: {
+				disappear: "disappear 0.5s ease-in-out forwards",
+			},
 		},
 	},
-	plugins: [
-		plugin(function ({ addComponents }) {
-			addComponents({
-				".default-button": {
-					padding: "10px 20px",
-					background: "#445e93",
-					color: "white",
-					border: "none",
-					borderRadius: "5px",
-					cursor: "pointer",
-					marginTop: "10px",
-					transition: "all 0.2s ease-in-out",
-					"&:hover": {
-						background: "#30436a",
-					},
-				},
-			});
-		}),
-	],
 };
