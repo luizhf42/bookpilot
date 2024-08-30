@@ -10,5 +10,10 @@ export const useBooksStore = defineStore("books", () => {
 	const recommendedBooks = ref<Book[]>([]);
 	const addRecommendedBook = (book: Book) => recommendedBooks.value.push(book);
 
-	return { books, addBook, deleteBook, recommendedBooks, addRecommendedBook };
+	const reset = () => {
+		// books.value = [];
+		recommendedBooks.value = [];
+	}
+
+	return { books, addBook, deleteBook, recommendedBooks, addRecommendedBook, reset };
 });
